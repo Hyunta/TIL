@@ -4,8 +4,8 @@ def DFS(v):
     if v>15:
         return
     else:
-        DFS(v*2)
         print(v, end = ' ')
+        DFS(v*2)
         DFS(v*2+1)
 
 
