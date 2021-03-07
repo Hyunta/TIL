@@ -1,4 +1,4 @@
-
+'''
 s = list(map(str, input()))
 li = [-1]*26
 ch = list()
@@ -8,3 +8,10 @@ for k,v in enumerate(s):
         ch.append(v)
 for x in li:
     print(x, end=' ')
+'''
+
+s = input()
+al ='abcdefghijklmnopqrstuvwxyz'
+
+for x in al:
+    print(s.find(x), end=' ')
