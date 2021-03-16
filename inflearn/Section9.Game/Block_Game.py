@@ -1,6 +1,8 @@
 import turtle as t
 import random as r
 import time
+dy=[-1,0,1,0]
+dx=[0,1,0,-1]
 
 class Brick():
     def __init__(self):
@@ -29,9 +31,17 @@ def draw_grid(block, grid):
             block.goto(sc_x,sc_y)
             block.color(colors[grid[y][x]])
             block.stamp()
-    block.goto(left, top)
 
-
+def DFS(y,x,grid,color):
+    global ch, blank
+    ch[y][x]=1
+    blank.append((y,x))
+    for i in range(4):
+        yy = y+dy[i]
+        xx = x+dx[i]
+        if 0< yy <24 and 0< xx <13:
+            if grid[yy][xx] == color and ch[yy][xx]==0:
+                DFS(yy,xx,grid,color)
 
 if __name__ == "__main__":
     sc = t.Screen()
@@ -69,6 +79,10 @@ if __name__ == "__main__":
             brick.y+=1
             grid[brick.y][brick.x]=brick.color
         else:
+            ch = [[0]*14 for _ in range(25)]
+            blank = []
+            DFS(brick.y,brick.x,grid,brick.color)
+            print(len(blank))
             brick=Brick()
 
         draw_grid(block, grid)
