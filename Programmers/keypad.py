@@ -29,3 +29,7 @@ def solution(numbers, hand):
                     rf = x
                     a += 'R'
     return a
+
+    from itertools import combinations
+    
+    combinations(n,3)
