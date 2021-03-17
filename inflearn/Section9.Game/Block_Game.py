@@ -65,6 +65,24 @@ def grid_update(grid, blank):
                 grid[y][x] = grid[tmp_y-1][x]
                 grid[tmp_y-1][x] = 0
 
+def continual_remove():
+    global blank, ch
+    while True:
+        flag= 1
+        for y in range(23, 15, -1):
+            for x in range(1, 13):
+                if grid[y][x] != 0:
+                    ch = [[0]*14 for _ in range(25)]
+                    blank = []
+                    DFS(y,x,grid,grid[y][x])
+                    if len(blank) >= 4:
+                        grid_update(grid, blank)
+                        flag = 0
+        draw_grid(block, grid)
+        if flag == 1:
+            break
+
+
 def game_over():
     pen.up()
     pen.goto(-120,100)
@@ -125,6 +143,7 @@ if __name__ == "__main__":
             DFS(brick.y,brick.x,grid,brick.color)
             if len(blank) >= 4:
                 grid_update(grid, blank)
+                continual_remove()
 
             height = max_height(grid)
             if height <= 15:
