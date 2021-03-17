@@ -29,7 +29,10 @@ def draw_grid(block, grid):
             sc_x = left + (x*22)
             sc_y = top - (y*22)
             block.goto(sc_x,sc_y)
-            block.color(colors[grid[y][x]])
+            if y ==15 and grid[y][x] == 7:
+                block.color("red")
+            else:
+                block.color(colors[grid[y][x]])
             block.stamp()
 
 def DFS(y,x,grid,color):
@@ -62,6 +65,19 @@ def grid_update(grid, blank):
                 grid[y][x] = grid[tmp_y-1][x]
                 grid[tmp_y-1][x] = 0
 
+def game_over():
+    pen.up()
+    pen.goto(-120,100)
+    pen.color("red")
+    pen.write("GAME OVER", font=("courier",30))
+
+def you_win():
+    pen.up()
+    pen.goto(-100,100)
+    pen.color('blue')
+    pen.write("You Win!", font=('courier',30))
+
+
 if __name__ == "__main__":
     sc = t.Screen()
     sc.tracer(False)
@@ -87,6 +103,12 @@ if __name__ == "__main__":
     grid[brick.y][brick.x]=brick.color
     draw_grid(block, grid)
 
+    pen =t.Turtle()
+    pen.ht()
+    pen.goto(-80,290)
+    pen.color("white")
+    pen.write("BLOCK GAME", font=('courier',20,'normal'))
+
     sc.onkeypress(lambda: brick.move_left(grid), "Left")
     sc.onkeypress(lambda: brick.move_right(grid), "Right")
     sc.listen()
@@ -103,7 +125,15 @@ if __name__ == "__main__":
             DFS(brick.y,brick.x,grid,brick.color)
             if len(blank) >= 4:
                 grid_update(grid, blank)
-            print(len(blank))
+
+            height = max_height(grid)
+            if height <= 15:
+                game_over()
+                break
+            elif height >= 22:
+                draw_grid(block, grid)
+                you_win()
+                break
 
             brick=Brick()
 
