@@ -4,8 +4,6 @@ def DFS(v):
             if cnt[i] == 1:
                 print(i, end = ' ')
         print()
-
-
     else:
         cnt[v] = 1
         DFS(v+1)
