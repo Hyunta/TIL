@@ -1,23 +1,10 @@
+from math import factorial as f
 def solution(n, k):
-    global c
-    res = [0] * n
-    ch = [0] * (n+1)
-    cnt = 0
-    c = 1
-    def DFS(L):
-        global cnt
-        global c
-        if L == n:
-            c += 1
-            if c == k:
-                return res
-        else:
-            for i in range(1,n+1):
-                if ch[i] == 0:
-                    ch[i] = 1
-                    res[L] = i
-                    DFS(L+1)
-                    ch[i] = 0    
-    DFS(0)
-
-print(solution(3,5))
+    answer = []
+    nl = list(range(1,n+1))
+    while n!=0 :
+        fact = f(n-1)
+        answer.append(nl.pop((k-1)//fact))
+        n -= 1
+        k %= fact
+    return answer
