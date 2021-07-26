@@ -1,4 +1,6 @@
 TddApplication.java
  TddApplication
+money/Franc.java
+ money.Franc
 money/Dollar.java
  money.Dollar
