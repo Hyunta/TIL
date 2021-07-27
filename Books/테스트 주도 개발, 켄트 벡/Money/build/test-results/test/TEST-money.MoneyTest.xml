@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="money.MoneyTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-07-26T08:55:50" hostname="MOHAI" time="0.05">
+<testsuite name="money.MoneyTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-07-27T07:34:58" hostname="MOHAI" time="0.04">
   <properties/>
-  <testcase name="testFrancMuliplication()" classname="money.MoneyTest" time="0.05"/>
+  <testcase name="testMuliplication()" classname="money.MoneyTest" time="0.034"/>
+  <testcase name="testFrancMuliplication()" classname="money.MoneyTest" time="0.002"/>
+  <testcase name="testEquality()" classname="money.MoneyTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
