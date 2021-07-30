@@ -1,7 +1,8 @@
 package money;
 
-class Money {
+class Money implements Expression{
     protected int amount;
+    protected String currency;
 
     public boolean equals(Object object) {
         Money money = (Money) object;
@@ -13,6 +14,10 @@ class Money {
         return new Money(amount * multiplier, currency);
     }
 
+    Expression plus(Money addend) {
+        return new Money(amount + addend.amount, currency);
+    }
+
     static Money dollar(int amount) {
         return new Money(amount, "USD");
     }
@@ -21,7 +26,6 @@ class Money {
         return new Money(amount, "CHF");
     }
 
-    protected String currency;
 
     String currency() {
         return currency;
@@ -31,7 +35,6 @@ class Money {
         this.amount = amount;
         this.currency = currency;
     }
-
 
 
     public String toString() {
