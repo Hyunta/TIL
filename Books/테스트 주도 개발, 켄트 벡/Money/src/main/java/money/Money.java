@@ -10,8 +10,9 @@ class Money implements Expression{
                 && currency().equals(money.currency());
     }
 
-    public Money reduce(String to) {
-        return this;
+    public Money reduce(Bank bank, String to) {
+        int rate = bank.rate(currency, to);
+        return new Money(amount / rate, to);
     }
 
     Money times(int multiplier) {
