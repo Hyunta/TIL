@@ -168,3 +168,66 @@ SELECT m.username, m.age FROM Member m -> 스칼라 타입 프로젝션 DISTINCT
   - setFirstResult(int startPosition) : 조회 시작 위치 (0부터 시작) 
   - setMaxResults(int maxResult) : 조회할 데이터 수
 
+
+
+----
+
+## 조인
+
+- INNERJOIN:
+  - SELECT m FROM Member m [INNER] JOIN m.team t
+- OUTERJOIN:
+  - SELECT m FROM Member m LEFT [OUTER] JOIN m.team t 
+- 세타 조인:
+  - select count(m) from Member m, Team t where m.username  = t.name
+
+
+
+### ON 절
+
+1. 조인 대상 필터링
+
+   - ex) 회원과 팀을 조인하면서, 팀 이름이 A인 팀만 조인
+
+   - JPQL:
+
+     SELECT m, t FROM Member m LEFT JOIN m.team t on t.name = 'A'  
+
+   - SQL:
+
+     SELECT m.*, t.* FROM  Member m LEFT JOIN Team t ON m.TEAM_ID=t.id and t.name='A'
+
+     
+
+2. 연관관계 없는 엔티티 외부 조인(하이버네이트 5.1부터)
+
+   - 예) 회원의 이름과 팀의 이름이 같은 대상 외부 조인
+
+   - JPQL: 
+
+     SELECT m, t FROM Member m LEFT JOIN Team t on m.username = t.name 
+
+   - SQL: 
+
+     SELECT m.*, t.* FROM  Member m LEFT JOIN Team t ON m.username = t.name
+
+
+
+----
+
+## 서브 쿼리
+
+- 나이가 평균보다 많은 회원 
+
+  select m from Member m where m.age > (select avg(m2.age) from Member m2)  
+
+- 한 건이라도 주문한 고객 
+
+  select m from Member m where (select count(o) from Order o where m = o.member) > 0 
+
+-------------------------
+
+# 210806 일시정지
+
+
+
