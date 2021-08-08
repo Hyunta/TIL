@@ -54,7 +54,7 @@ class wasRun(TestCase):
 
 
 
-TestCase 클래스는 테스트를 받아와서 실행하고,
+TestCase 클래스는 부모클래스로, 
 
 WasRun은 작동했는지 여부를,
 
@@ -85,4 +85,79 @@ class TestCaseTest(TestCase):
 
 TestCaseTest("testRunning").run()
 ```
+
+----
+
+### 19장. 테이블 차리기
+
+테스트를 하다보면 발생하는 3가지 패턴 (Bill Wake의 3A)
+
+1. Arrange - 객체를 생성
+2. Act - 어떤 자극
+3. Assert - 결과를 검사
+
+2,3 단계는 다르지만 1단계는 공통으로 가져가는 경우가 있다.
+
+ex) 객체 7,3을 통한 덧셈과 뺄셈
+
+객체를 생성할 때 두 가지를 고려한다.
+
+1. 성능:
+   - 여러 테스트가 같은 객체를 사용하면, 효율적이다.
+2. 격리:
+   - 한 테스트가 다른 테스트의 결과에 영향을 미치지 않아야한다.
+
+
+
+테스트 사이의 커플링을 만들면 안된다. 객체가 충분히 빨리 생성된다는 가정하에 코드를 수정한다.
+
+
+
+```python
+class TestCase:
+    def __init__(self, name):
+        print("name= ", name)
+        self.name = name
+
+    def setUp(self):
+        pass
+
+    def run(self):
+        self.setUp()
+        method = getattr(self, self.name)
+        method()
+
+
+class WasRun(TestCase):
+    def __init__(self, name):
+        self.wasRun= None
+        TestCase.__init__(self, name)
+
+    def testMethod(self):
+        self.wasRun = 1
+
+    def setUp(self):
+        self.wasRun = None
+        self.wasSetUp = 1
+
+
+class TestCaseTest(TestCase):
+    def setUp(self):
+        self.test = WasRun("testMethod")
+
+    def testRunning(self):
+        self.test.run()
+        assert (self.test.wasRun)
+
+    def testSetUp(self):
+        self.test.run()
+        assert (self.test.wasSetUp)
+
+TestCaseTest("testRunning").run()
+TestCaseTest("testSetUp").run()
+```
+
+`TestCaseTest("testRunnint").run()`의 작동원리
+
+![image-20210808174631178](C:\Users\mohai\AppData\Roaming\Typora\typora-user-images\image-20210808174631178.png)
 

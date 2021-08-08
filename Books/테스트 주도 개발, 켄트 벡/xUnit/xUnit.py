@@ -40,8 +40,6 @@ class TestCaseTest(TestCase):
         print("TestCaseTest2")
         self.test.run()
         assert (self.test.wasRun)
-        print(self.test.wasRun)
-        print(str(self))
 
     def testSetUp(self):
         print("TestCaseTest3")
