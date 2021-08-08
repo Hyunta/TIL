@@ -161,3 +161,53 @@ TestCaseTest("testSetUp").run()
 
 ![image-20210808174631178](C:\Users\mohai\AppData\Roaming\Typora\typora-user-images\image-20210808174631178.png)
 
+----
+
+### 20장. 뒷정리하기
+
+setUp()을 외부 자원을 할당하는 경우가 있다. 각 테스트가 독립적이길 바란다면 tearDown() 메서드 같은 곳에서 자원을 다시 반환할 필요가 있다.
+
+
+
+```python
+class TestCase:
+    def __init__(self, name):
+        self.name = name
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def run(self):
+        self.setUp()
+        method = getattr(self, self.name)
+        method()
+        self.tearDown()
+
+
+class WasRun(TestCase):
+    def testMethod(self):
+        self.wasRun = 1
+        self.log = self.log + "testMethod "
+
+    def setUp(self):
+        self.wasRun = None
+        self.log= "setUp "
+    def tearDown(self):
+        self.log = self.log + "tearDown "
+
+
+
+class TestCaseTest(TestCase):
+    def testTemplateMethod(self):
+        test = WasRun("testMethod")
+        test.run()
+        assert ("setUp testMethod tearDown " == test.log)
+
+TestCaseTest("testTemplateMethod").run()
+```
+
+- 기존 0/1 플래그에서 로그로 테스트 전략을 수정했다.
+- tearDown()을 테스트하고 구현했다.
