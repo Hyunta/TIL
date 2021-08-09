@@ -379,5 +379,158 @@ TestCaseTest("testFailedResult").run()
 
 ----
 
-### 23장. 얼마나 달콤한지
+### 23장. 얼마나 달콤한지 (How Suite It Is)
+
+test를 여러번 해야하는 번거로움이 있다. 한번에 테스트를 하나만 할  수 있다면 독립적으로 돌아가는 의미가 없다. TestSuite를 구현하여 모두 실행할 수 있도록 한다.
+
+``` python
+class TestSuite:
+    def __init__(self):
+        self.tests = []
+
+    def add(self, test):
+        self.tests.append(test)
+
+    def run(self, result):
+        for test in self.tests:
+            test.run(result)
+
+suite = TestSuite()
+suite.add(TestCaseTest("testTemplateMethod"))
+suite.add(TestCaseTest("testResult"))
+suite.add(TestCaseTest("testFailedResultFormatting"))
+suite.add(TestCaseTest("testFailedResult"))
+suite.add(TestCaseTest("testSuite"))
+result = TestResult()
+suite.run(result)
+print(result.summary())
+```
+
+
+
+TestCaseTest를 하는 중에 발생하는 중복들을 정리했다.
+
+`최종코드`
+
+``` python
+class TestCase:
+    def __init__(self, name):
+        self.name = name
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def run(self, result):
+        result.testStarted()
+        self.setUp()
+        try:
+            method = getattr(self, self.name)
+            method()
+        except:
+            result.testFailed()
+        self.tearDown()
+
+
+class WasRun(TestCase):
+    def testMethod(self):
+        self.wasRun = 1
+        self.log = self.log + "testMethod "
+
+    def setUp(self):
+        self.wasRun = None
+        self.log= "setUp "
+
+    def tearDown(self):
+        self.log = self.log + "tearDown "
+
+    def testBrokenMethod(self):
+        raise Exception
+
+
+class TestCaseTest(TestCase):
+    def setUp(self):
+        self.result = TestResult()
+
+    def testTemplateMethod(self):
+        test = WasRun("testMethod")
+        test.run(self.result)
+        assert ("setUp testMethod tearDown " == test.log)
+
+    def testResult(self):
+        test = WasRun("testMethod")
+        test.run(self.result)
+        assert ("1 run, 0 failed" == self.result.summary())
+
+    def testFailedResult(self):
+        test = WasRun("testBrokenMethod")
+        test.run(self.result)
+        assert ("1 run, 1 failed" == self.result.summary())
+
+    def testFailedResultFormatting(self):
+        self.result.testStarted()
+        self.result.testFailed()
+        assert ("1 run, 1 failed" == self.result.summary())
+
+    def testSuite(self):
+        suite = TestSuite()
+        suite.add(WasRun("testMethod"))
+        suite.add(WasRun("testBrokenMethod"))
+        suite.run(self.result)
+        assert ("2 run, 1 failed" == self.result.summary())
+
+
+
+class TestResult:
+    def __init__(self):
+        self.runCount = 0
+        self.failureCount = 0
+
+    def testStarted(self):
+        self.runCount = self.runCount + 1
+
+    def testFailed(self):
+        self.failureCount = self.failureCount + 1
+
+    def summary(self):
+        return "%d run, %d failed" %(self.runCount, self.failureCount)
+
+
+class TestSuite:
+    def __init__(self):
+        self.tests = []
+
+    def add(self, test):
+        self.tests.append(test)
+
+    def run(self, result):
+        for test in self.tests:
+            test.run(result)
+
+suite = TestSuite()
+suite.add(TestCaseTest("testTemplateMethod"))
+suite.add(TestCaseTest("testResult"))
+suite.add(TestCaseTest("testFailedResultFormatting"))
+suite.add(TestCaseTest("testFailedResult"))
+suite.add(TestCaseTest("testSuite"))
+result = TestResult()
+suite.run(result)
+print(result.summary())
+
+```
+
+
+
+----
+
+### 24장. xUnit 회고
+
+각 언어별로 xUnit은 이미 잘 구현되어있다. 하지만 직접 구현해봐야하는 이유는 두가지이다.
+
+1. 숙달: xUnit의 정신은 간결함에 있다. 하지만 몇몇 구현은 복잡해 보인다. 직접 만들어 사용하면 숙달된 도구를 쓰는 느낌을 받게 된다.
+2. 탐험: 새로운 프로그래밍 언어를 만나면 그 언어로 xUnit을 만들어본다. 8~10개정도 통과할 때 쯤이면 그 언어로 프로그래밍 하면서 접하게될 기능을 한번씩 경험할 수 있다.
+
+
 
