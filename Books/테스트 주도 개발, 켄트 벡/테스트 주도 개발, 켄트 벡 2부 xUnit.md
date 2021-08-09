@@ -211,3 +211,173 @@ TestCaseTest("testTemplateMethod").run()
 
 - 기존 0/1 플래그에서 로그로 테스트 전략을 수정했다.
 - tearDown()을 테스트하고 구현했다.
+
+----
+
+### 21장. 셈하기
+
+목표 : 테스트 실행 갯수와 실패 여부 보여주기
+
+`5 run, 2 failed` 와 같은 형식으로
+
+따로 실행 결과를 기록하는 TestResult 객체를 반환하게 만든다.
+
+
+
+```python
+class TestCase:
+    def __init__(self, name):
+        self.name = name
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def run(self):
+        result = TestResult()
+        result.testStarted()
+        self.setUp()
+        method = getattr(self, self.name)
+        method()
+        self.tearDown()
+        return result
+
+
+class WasRun(TestCase):
+    def testMethod(self):
+        self.wasRun = 1
+        self.log = self.log + "testMethod "
+
+    def setUp(self):
+        self.wasRun = None
+        self.log= "setUp "
+
+    def tearDown(self):
+        self.log = self.log + "tearDown "
+
+    def testBrokenMethod(self):
+        raise Exception
+
+
+class TestCaseTest(TestCase):
+    def testResult(self):
+        test = WasRun("testMethod")
+        result = test.run()
+        assert ("1 run, 0 failed" == result.summary())
+
+    def testFailedResult(self):
+        test = WasRun("testBrokenMethod")
+        result = test.run()
+        assert ("1 run, 1 failed" == result.summary())
+
+class TestResult:
+    def __init__(self):
+        self.runCount = 0
+
+    def testStarted(self):
+        self.runCount = self.runCount + 1
+
+    def summary(self):
+        return "%d run, 0 failed" % self.runCount
+
+
+TestCaseTest("testResult").run()
+TestCaseTest("testFailedResult").run()
+```
+
+- 가짜 구현을 한 뒤에 단계적으로 상수를 변수로 바꾸어 실제 구현으로 만듬
+- 테스트가 실패했을 때 좀더 작은 스케일로 또 다른 테스트를 만들어서 실패한 테스트가 성공하게 만드는 것을 보조
+
+----
+
+### 22장. 실패 처리하기
+
+테스트가 실패한 경우 Count가 있어야하기 때문에 속성을 추가한다.
+
+테스트를 run하는 중에 fail이 발생한다면 늘어날 수 있도록 설정한다.
+
+
+
+``` python
+class TestCase:
+    def __init__(self, name):
+        self.name = name
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def run(self):
+        result = TestResult()
+        result.testStarted()
+        self.setUp()
+        try:
+            method = getattr(self, self.name)
+            method()
+        except:
+            result.testFailed()
+        self.tearDown()
+        return result
+
+
+class WasRun(TestCase):
+    def testMethod(self):
+        self.wasRun = 1
+        self.log = self.log + "testMethod "
+
+    def setUp(self):
+        self.wasRun = None
+        self.log= "setUp "
+
+    def tearDown(self):
+        self.log = self.log + "tearDown "
+
+    def testBrokenMethod(self):
+        raise Exception
+
+
+class TestCaseTest(TestCase):
+    def testResult(self):
+        test = WasRun("testMethod")
+        result = test.run()
+        assert ("1 run, 0 failed" == result.summary())
+
+    def testFailedResult(self):
+        test = WasRun("testBrokenMethod")
+        result = test.run()
+        assert ("1 run, 1 failed" == result.summary())
+
+    def testFailedResultFormatting(self):
+        result = TestResult()
+        result.testStarted()
+        result.testFailed()
+        assert ("1 run, 1 failed" == result.summary())
+
+
+class TestResult:
+    def __init__(self):
+        self.runCount = 0
+        self.failureCount = 0
+
+    def testStarted(self):
+        self.runCount = self.runCount + 1
+
+    def testFailed(self):
+        self.failureCount = self.failureCount + 1
+
+    def summary(self):
+        return "%d run, 0 failed" % (self.runCount, self.failureCount)
+
+
+TestCaseTest("testResult").run()
+TestCaseTest("testFailedResult").run()
+```
+
+----
+
+### 23장. 얼마나 달콤한지
+
