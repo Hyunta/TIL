@@ -13,9 +13,12 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.h2database:h2:1.4.200'
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'com.h2database:h2:2.1.214'
+    runtimeOnly 'com.h2database:h2'
+//    compileOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
