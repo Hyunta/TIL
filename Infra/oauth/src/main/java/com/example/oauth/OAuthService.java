@@ -33,6 +33,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
         Map<String, Object> attributes = oAuth2User.getAttributes();
+
         String email = (String) attributes.get("email");
         log.info(email);
         log.info(attributes.keySet().toString());
