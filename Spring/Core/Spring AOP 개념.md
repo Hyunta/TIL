@@ -27,3 +27,21 @@ joinPoint를 사용해서 다양한 위치에 적용할 수 있다.
 스프링 빈에만 프록시가 동작한다.
 
 스프링은 AspectJ의 문법을 차용하고 프록시 방식의 AOP를 적용한다. AspectJ를 직접 사용하는 것이 아니다. AsepectJ 자체가 너무 방대하므로, 스프링이 제공하는 AspectJ만 알아도 충분하다.
+
+
+
+# 스프링 AOP 포인트컷
+
+# Execution
+
+기본 문법
+
+```java
+ execution(modifiers-pattern? ret-type-pattern declaring-type-pattern?name-pattern(param-pattern) throws-pattern?)
+
+execution(접근제어자? 반환타입 선언타입?메서드이름(파라미터) 예외?)
+```
+
+.은 정확히 해당 패키지
+
+..은 하위패키지까지 포함
