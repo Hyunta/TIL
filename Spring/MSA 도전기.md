@@ -86,3 +86,39 @@ Member, Product 유레카 클라이언트를 각각 생성해줌
 막힌 부분:
 
 1. Product에 대한 Test 중 Member를 사용해야하는 경우 어떻게 할 것 인가?
+
+
+
+# AMPQ 프로토콜 → 비동기
+
+------
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/83318218-a356-433b-aad8-4323dac8b20b/Untitled.png)
+
+- 변경사항을 전파?
+- FeignClient를 이용해서 통신한다
+  - Spring Cloud Netflix
+  - Http Client
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4238f69b-1afb-4ebe-8562-02502b49c49b/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/740819ca-23a4-4f16-92a4-9db5f460eb75/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bfda1d96-df58-4b80-b0e7-e898fc6d0fe7/Untitled.png)
+
+애플리케이션에서 feignclient 의존성 주입
+
+상품에서 멤버 사용하는 쪽을 페인 클라이언트 조회로 변경
+
+# 예외처리
+
+------
+
+### 로깅
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2891aa0f-b79a-4bcb-9041-425bc55f3f30/Untitled.png)
+
+### 예외
+
+- 엔드포인트가 없는 경우
+- 예외 응답이 온 경우
