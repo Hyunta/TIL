@@ -70,7 +70,6 @@ public class DeciderJobConfiguration
         return stepBuilderFactory.get("oddStep")
             .tasklet(((contribution, chunkContext) ->
             {
-
                 log.info(">>>>> 홀수입니다.");
                 return RepeatStatus.FINISHED;
             }))
