@@ -1,4 +1,4 @@
-package play.springbatch.job;
+package play.springbatch.job.flow;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
