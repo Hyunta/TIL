@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="arthur.javaground.mapper.PersonMapper">
+    <select id="findAll" resultType="arthur.javaground.domain.Person">
+        SELECT seq,
+               name,
+               nickname,
+               age
+--         SELECT *
+        FROM person;
+    </select>
+</mapper>
