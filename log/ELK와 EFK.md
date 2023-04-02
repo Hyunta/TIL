@@ -2,11 +2,7 @@
 
 ElasticSearch - LogStash - Kibana
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2b6f9542-1fc2-43bc-96e2-f67beb8c9966/Untitled.png)
-
 ElasticSearch - Fluentd - Kibana
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bd790406-d7ed-4e57-8b3d-9d32800a26e8/Untitled.png)
 
 로그를 수집하는 과정에서 로그 적재기, 로그 저장소, 로그 시각화 툴이 필요하다. LogStash와 Fluentd는 모두 로그 적재기의 역할을 한다. 로그 파일을 수집하고 적재하여 ElasticSearch에 적재하고 해당 데이터를 Kibana를 이용해 표출하는 용도로 스택을 구성한다.
 
