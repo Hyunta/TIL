@@ -17,7 +17,7 @@ public class PaymentService {
         paymentClient.pay(paymentRequest);
     }
 
-    private static PaymentClient findPaymentClient(Payment payment) {
+    private PaymentClient findPaymentClient(Payment payment) {
         return Arrays.stream(Pg.values())
                 .filter(it -> it.equals(payment.getPg()))
                 .findAny()
@@ -25,7 +25,7 @@ public class PaymentService {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static PaymentRequest findPaymentRequest(Payment payment) {
+    private PaymentRequest findPaymentRequest(Payment payment) {
         return Arrays.stream(Pg.values())
                 .filter(it -> it.equals(payment.getPg()))
                 .findAny()
