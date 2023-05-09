@@ -1,5 +1,7 @@
 package com.example.payment;
 
+import com.example.dto.request.BankRequest;
+import com.example.dto.response.BankResponse;
 import org.springframework.stereotype.Component;
 
 @Component

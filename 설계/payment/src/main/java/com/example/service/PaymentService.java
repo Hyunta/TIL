@@ -1,20 +1,20 @@
 package com.example.service;
 
 import com.example.payment.BankPaymentClient;
-import com.example.payment.BankRequest;
-import com.example.payment.BankResponse;
+import com.example.dto.request.BankRequest;
+import com.example.dto.response.BankResponse;
 import com.example.payment.CardOnePaymentClient;
-import com.example.payment.CardOneRequest;
-import com.example.payment.CardOneResponse;
+import com.example.dto.request.CardOneRequest;
+import com.example.dto.response.CardOneResponse;
 import com.example.payment.CardThreePaymentClient;
-import com.example.payment.CardThreeRequest;
-import com.example.payment.CardThreeResponse;
+import com.example.dto.request.CardThreeRequest;
+import com.example.dto.response.CardThreeResponse;
 import com.example.payment.CardTwoPaymentClient;
-import com.example.payment.CardTwoRequest;
-import com.example.payment.CardTwoResponse;
-import com.example.payment.Payment;
-import com.example.payment.PaymentType;
-import com.example.payment.Pg;
+import com.example.dto.request.CardTwoRequest;
+import com.example.dto.response.CardTwoResponse;
+import com.example.domain.Payment;
+import com.example.domain.PaymentType;
+import com.example.domain.Pg;
 import org.springframework.stereotype.Service;
 
 @Service

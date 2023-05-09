@@ -1,4 +1,6 @@
-package com.example.payment;
+package com.example.dto.request;
+
+import com.example.domain.Payment;
 
 public class CardTwoRequest {
 
