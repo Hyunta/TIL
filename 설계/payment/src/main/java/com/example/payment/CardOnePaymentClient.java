@@ -1,13 +1,13 @@
 package com.example.payment;
 
-import com.example.dto.request.CardOneRequest;
+import com.example.dto.request.PaymentRequest;
 import com.example.dto.response.CardOneResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CardOnePaymentClient {
+public class CardOnePaymentClient implements PaymentClient {
 
-    public CardOneResponse pay(CardOneRequest request) {
+    public CardOneResponse pay(PaymentRequest request) {
         //do something
         return new CardOneResponse();
     }

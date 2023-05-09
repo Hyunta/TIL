@@ -1,4 +1,4 @@
 package com.example.dto.response;
 
-public class CardThreeResponse {
+public class CardThreeResponse implements PaymentResponse{
 }
